@@ -1,4 +1,4 @@
-package com.github.parasmani300.avroformatexample.serializer;
+package com.github.parasmani300.bankbalance.serializer;
 
 import org.apache.avro.generic.GenericDatumWriter;
 import org.apache.avro.generic.GenericRecord;
@@ -9,9 +9,7 @@ import org.apache.avro.specific.SpecificRecordBase;
 import org.apache.kafka.common.serialization.Serializer;
 import org.springframework.stereotype.Component;
 
-import javax.xml.bind.DatatypeConverter;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.Map;
 
 @Component

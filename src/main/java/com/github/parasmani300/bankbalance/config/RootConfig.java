@@ -1,8 +1,7 @@
-package com.github.parasmani300.avroformatexample.config;
+package com.github.parasmani300.bankbalance.config;
 
-import com.github.parasmani300.avroformatexample.avro.SampleClass;
-import com.github.parasmani300.avroformatexample.serializer.AvroSerializer;
-import io.confluent.kafka.serializers.KafkaAvroSerializer;
+import com.github.parasmani300.bankbalance.avro.SampleClass;
+import com.github.parasmani300.bankbalance.serializer.AvroSerializer;
 import org.apache.kafka.clients.CommonClientConfigs;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.config.SaslConfigs;
@@ -14,6 +13,7 @@ import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
+import org.springframework.kafka.support.serializer.JsonSerializer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +24,9 @@ public class RootConfig {
 
     @Value("${spring.kafka.properties.bootstrap.servers}")
     String bootstrapServer;
+
+    @Value("${spring.profiles.active}")
+    String activeProfile;
 
     @Bean
     public ProducerFactory<String, SampleClass> producerFactory()
@@ -42,12 +45,12 @@ public class RootConfig {
         Map<String,Object> props = new HashMap<>();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,bootstrapServer);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, AvroSerializer.class);
-
-        props.put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, "SASL_SSL");
-        props.put(SaslConfigs.SASL_MECHANISM, "PLAIN");
-        props.put(SaslConfigs.SASL_JAAS_CONFIG, jaasConfig);
-
+        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+        if(!activeProfile.equals("dev")) {
+            props.put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, "SASL_SSL");
+            props.put(SaslConfigs.SASL_MECHANISM, "PLAIN");
+            props.put(SaslConfigs.SASL_JAAS_CONFIG, jaasConfig);
+        }
 //        props.put(SslConfigs.SSL_TRUSTSTORE_LOCATION_CONFIG, truststore_location);
 //        props.put(SslConfigs.SSL_TRUSTSTORE_PASSWORD_CONFIG, truststore_password);
 //        props.put(SslConfigs.SSL_KEYSTORE_LOCATION_CONFIG, keystore_location);

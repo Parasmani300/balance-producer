@@ -1,6 +1,6 @@
-package com.github.parasmani300.avroformatexample;
+package com.github.parasmani300.bankbalance;
 
-import com.github.parasmani300.avroformatexample.config.RootConfig;
+import com.github.parasmani300.bankbalance.config.RootConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;

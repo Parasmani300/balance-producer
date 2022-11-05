@@ -1,7 +1,7 @@
 {
   "name": "SampleClass",
   "type": "record",
-  "namespace": "com.github.parasmani300.avroformatexample.avro",
+  "namespace": "com.github.parasmani300.bankbalance.avro",
   "fields": [
     {
       "name": "id",
